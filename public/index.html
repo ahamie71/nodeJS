@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test API</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+
+  
+
+  <button onclick="getUsers()">Afficher les utilisateurs</button>
+
+  <table id="usersTable" border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="usersBody">
+      <!-- Ici seront affichés les utilisateurs -->
+    </tbody>
+  </table>
+
+  <script>
+    const apiUrl = 'http://localhost:3000/api'; // Mettez votre URL d'API
+
+    async function getUsers() {
+      try {
+        const response = await fetch(`${apiUrl}/utilisateurs`);
+        const users = await response.json();
+        console.log('Utilisateurs :', users);
+        displayUsers(users);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+      }
+    }
+
+    function displayUsers(users) {
+      const usersBody = document.getElementById('usersBody');
+      usersBody.innerHTML = ''; // Efface le contenu précédent du tableau
+
+      users.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.id}</td>
+          <td>${user.nom}</td>
+          <td>${user.prenom}</td>
+          <td>${user.email}</td>
+        `;
+        usersBody.appendChild(tr);
+      });
+    }
+
+  
+
+  </script>
+  <button onclick="getTechnos()">Afficher les technologies</button>
+
+  <table id="technosTable" border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="technosBody">
+      <!-- Ici seront affichées les technologies -->
+    </tbody>
+  </table>
+
+  <div id="commentaireTechno">
+    <!-- Ici sera affiché le commentaire de la technologie sélectionnée -->
+  </div>
+
+  <script>
+    const apiUrl1 = 'http://localhost:3000/api'; // Mettez votre URL d'API
+
+    async function getTechnos() {
+      try {
+        const response = await fetch(`${apiUrl1}/techno`);
+        const technos = await response.json();
+        console.log('Technologies :', technos);
+        displayTechnos(technos);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des technologies :', error);
+      }
+    }
+
+    function displayTechnos(technos) {
+      const technosBody = document.getElementById('technosBody');
+      technosBody.innerHTML = ''; // Efface le contenu précédent du tableau
+
+      technos.forEach(techno => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${techno.id}</td>
+          <td>${techno.nom_techno}</td>
+      
+        `;
+        tr.addEventListener('click', () => {
+          showComment(techno.commentaire);
+        });
+        technosBody.appendChild(tr);
+      });
+    }
+
+    function showComment(commentaire) {
+      const commentaireTechno = document.getElementById('commentaireTechno');
+      commentaireTechno.innerHTML = `<p>Commentaire : ${commentaire}</p>`;
+    }
+  </script>
+ 
+</body>
+</html>
+
+
+
+
+</body>
+</html>
+
