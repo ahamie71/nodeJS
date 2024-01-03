@@ -60,66 +60,7 @@
   
 
   </script>
-  <button onclick="getTechnos()">Afficher les technologies</button>
-
-  <table id="technosTable" border="1">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nom</th>
-       
-      </tr>
-    </thead>
-    <tbody id="technosBody">
-      <!-- Ici seront affichées les technologies -->
-    </tbody>
-  </table>
-
-  <div id="commentaireTechno">
-    <!-- Ici sera affiché le commentaire de la technologie sélectionnée -->
-  </div>
-
-  <script>
-    const apiUrl1 = 'http://localhost:3000/api'; // Mettez votre URL d'API
-
-    async function getTechnos() {
-      try {
-        const response = await fetch(`${apiUrl1}/techno`);
-        const technos = await response.json();
-        console.log('Technologies :', technos);
-        displayTechnos(technos);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des technologies :', error);
-      }
-    }
-
-    function displayTechnos(technos) {
-      const technosBody = document.getElementById('technosBody');
-      technosBody.innerHTML = ''; // Efface le contenu précédent du tableau
-
-      technos.forEach(techno => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${techno.id}</td>
-          <td>${techno.nom_techno}</td>
-      
-        `;
-        tr.addEventListener('click', () => {
-          showComment(techno.nom_techno);
-        });
-        technosBody.appendChild(tr);
-      });
-    }
-
-    function showComment(commentaire) {
-      const commentaireTechno = document.getElementById('commentaireTechno');
-      commentaireTechno.innerHTML = `<p>Commentaire : ${commentaire}</p>`;
-    }
-  </script>
- 
-</body>
-</html>
-
+  
 
 
 
