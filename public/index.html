@@ -67,7 +67,7 @@
       <tr>
         <th>ID</th>
         <th>Nom</th>
-        <th>Description</th>
+       
       </tr>
     </thead>
     <tbody id="technosBody">
@@ -105,7 +105,7 @@
       
         `;
         tr.addEventListener('click', () => {
-          showComment(techno.commentaire);
+          showComment(techno.nom_techno);
         });
         technosBody.appendChild(tr);
       });

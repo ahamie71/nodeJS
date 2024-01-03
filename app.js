@@ -176,7 +176,7 @@ app.post('/api/commentaires', (req, res) => {
 app.get('/api/commentaires/technologie/:id_technologie', (req, res) => {
     const technologieId = req.params.id_technologie;
   
-    db.query('SELECT c.*, t.nom_technologie FROM commentaire c JOIN technologie t ON c.id_technologie = t.id WHERE c.id_technologie = ?', technologieId, (err, results) => {
+    db.query('SELECT c.*, t.nom_techno FROM commentaire c JOIN technologie t ON c.id_technologie = t.id WHERE c.id_technologie = ?', technologieId, (err, results) => {
       if (err) {
         console.error('Erreur lors de la récupération des commentaires pour la technologie :', err);
         res.status(500).send('Erreur serveur lors de la récupération des commentaires pour la technologie');
