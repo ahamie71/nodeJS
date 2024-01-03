@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Commentaires Technologie</title>
+  <style>
+    /* Styles CSS pour la mise en page */
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    #commentaireTechno {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="getTechnos()">Afficher les technologies</button>
+
+  <table id="technosTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+      </tr>
+    </thead>
+    <tbody id="technosBody">
+      <!-- Ici seront affichées les technologies -->
+    </tbody>
+  </table>
+
+  <div id="commentaireTechno">
+    <!-- Ici sera affiché le commentaire de la technologie sélectionnée -->
+  </div>
+
+  <script>
+    const apiUrl = 'http://localhost:3000/api';
+
+    async function getTechnos() {
+      try {
+        const response = await fetch(`${apiUrl}/techno`);
+        const technos = await response.json();
+        displayTechnos(technos);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des technologies :', error);
+      }
+    }
+
+    function displayTechnos(technos) {
+      const technosBody = document.getElementById('technosBody');
+      technosBody.innerHTML = '';
+
+      technos.forEach(techno => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${techno.id}</td>
+          <td>${techno.nom_techno}</td>
+        `;
+        tr.addEventListener('click', () => {
+          getComments(techno.id);
+        });
+        technosBody.appendChild(tr);
+      });
+    }
+
+    async function getComments(technoId) {
+      try {
+        const response = await fetch(`${apiUrl}/commentaires/technologie/${technoId}`);
+        const comments = await response.json();
+        displayComments(comments);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des commentaires :', error);
+      }
+    }
+
+    function displayComments(comments) {
+        const commentaireTechno = document.getElementById('commentaireTechno');
+        if (comments.length > 0) {
+          const comment = comments[0].contenu; // Adaptation pour récupérer le contenu du commentaire
+          const date = comments[0].date_creation_commentaire; // Optionnel : Récupération de la date si nécessaire
+          commentaireTechno.innerHTML = `<p>Commentaire (${date}): ${comment}</p>`;
+        } else {
+          commentaireTechno.innerHTML = '<p>Aucun commentaire disponible pour cette technologie.</p>';
+        }
+      }
+  </script>
+</body>
+</html>
